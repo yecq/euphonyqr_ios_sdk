@@ -72,7 +72,7 @@ typedef void(^BuyfullDetectCallback)(float,NSDictionary*_Nullable,NSError*_Nulla
  *
  请求TOKEN，有了TOKEN后才能使用BUYFULL SDK
  */
--(NSURLRequest*_Nullable)    requestToken:(NSString*_Nonnull)apiServer
+-(NSURLRequest*_Nullable)    requestToken:(NSString*_Nonnull)tokenURL
                                    appkey:(NSString*_Nonnull)appkey
                                 isSandbox:(BOOL)isSandbox
                                     error:(NSError*_Nullable*_Nullable)outError;

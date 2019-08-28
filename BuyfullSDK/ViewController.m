@@ -49,7 +49,7 @@
                 if (err != nil){
                     self.result.text = [err localizedDescription];
                 }else if(jsonResp == nil){
-                    self.result.text = [NSString stringWithFormat:@"No detect result, signal db is %f", dB];//音量太低不检测
+                    self.result.text = [NSString stringWithFormat:@"No detect result, signal dB is %f", dB];//音量太低不检测
                 }else{
                     NSString* requestID = [jsonResp objectForKey:@"reqid"];//requestID可以用于在动听后台查询日志
                     int tagCount = [[jsonResp objectForKey:@"count"] intValue];//有效结果个数

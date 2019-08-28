@@ -21,7 +21,7 @@
 #define N_WAVE          (64*1024)	/* dimension of fsin[] */
 #define LOG2_N_WAVE     (6+10)		/* log2(N_WAVE) */
 #define abs(x) ((x)>0?(x):-(x))
-#define SDK_VERSION     @"1.0.0"
+#define SDK_VERSION     @"1.0.1"
 
 const int   RECORD_SAMPLE_RATE = 44100; //默认录音采样率
 const float RECORD_PERIOD = 1.2; //录音时长
@@ -500,11 +500,11 @@ bool hasInited = FALSE;
     return result;
 }
 
--(NSURLRequest*)    requestToken:(NSString*)apiServer
+-(NSURLRequest*)    requestToken:(NSString*)tokenURL
                           appkey:(NSString*)appkey
                        isSandbox:(BOOL)isSandbox
                            error:(NSError**)outError{
-    NSString*   url = [NSString stringWithFormat:@"%@?appkey=%@",apiServer, appkey];
+    NSString*   url = [NSString stringWithFormat:@"%@?appkey=%@",tokenURL, appkey];
     return [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
 }
 
@@ -589,10 +589,12 @@ bool hasInited = FALSE;
         NSArray* tags = [[sortedResults objectAtIndex:index] objectForKey:@"tags"];
         if ([tags count] > 0){
             [validResults addObject:[sortedResults objectAtIndex:index]];
-            [validTagset addObjectsFromArray:tags];
+
             for (int index2 = 0;index2 < [tags count];++index2){
-                if ([validTagset containsObject:[tags objectAtIndex:index2]]){
-                    [allTags addObject:[tags objectAtIndex:index2]];
+                NSString* tag = [tags objectAtIndex:index2];
+                if (![validTagset containsObject:tag]){
+                    [allTags addObject:tag];
+                    [validTagset addObject:tag];
                 }
             }
         }
@@ -628,12 +630,9 @@ bool hasInited = FALSE;
         NSString* osVersion = [[UIDevice currentDevice] systemVersion];
         NSString* idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
         NSMutableDictionary *deviceInfo = [[NSMutableDictionary alloc] init];
-        [deviceInfo setValue:@"iOS" forKey:@"platform"];
-        [deviceInfo setValue:@"iOS" forKey:@"system"];
         [deviceInfo setValue:idfa forKey:@"idfa"];
         [deviceInfo setValue:deviceType forKey:@"model"];
         [deviceInfo setValue:osVersion forKey:@"version"];
-        [deviceInfo setValue:@"iphone" forKey:@"brand"];
         NSData *data = [NSJSONSerialization dataWithJSONObject:deviceInfo options:NSJSONWritingPrettyPrinted error:nil];
         self.deviceInfo = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         self.appKey = appkey;
