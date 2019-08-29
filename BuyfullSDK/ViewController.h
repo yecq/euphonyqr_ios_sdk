@@ -14,6 +14,6 @@
 @property (nonatomic, retain) IBOutlet UIButton *test;
 
 -(IBAction)onTest:(id)sender;
-
+-(IBAction)onDebugUpload:(id)sender;
 @end
 

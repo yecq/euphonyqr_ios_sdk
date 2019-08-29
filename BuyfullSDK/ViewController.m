@@ -11,6 +11,7 @@
 
 @interface ViewController ()
 
+@property (nonatomic ,strong) NSString *lastRequestID;
 @end
 
 @implementation ViewController
@@ -24,6 +25,15 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(IBAction)onDebugUpload:(id)sender{
+    //APP要自已申请麦克风权限，申请成功后才能正常调用SDK
+    //SDK中自带麦请麦克风权限代码，可以自行修改
+    if (self.lastRequestID == nil)
+        return;
+    AppDelegate* app = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.buyfullSDK debugUpload:self.lastRequestID];
 }
 
 -(IBAction)onTest:(id)sender{
@@ -52,6 +62,7 @@
                     self.result.text = [NSString stringWithFormat:@"No detect result, signal dB is %f", dB];//音量太低不检测
                 }else{
                     NSString* requestID = [jsonResp objectForKey:@"reqid"];//requestID可以用于在动听后台查询日志
+                    self.lastRequestID = requestID;
                     int tagCount = [[jsonResp objectForKey:@"count"] intValue];//有效结果个数
                     if (tagCount > 0){
                         NSArray* allTags =  [jsonResp objectForKey:@"allTags"];

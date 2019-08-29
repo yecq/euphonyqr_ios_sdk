@@ -99,4 +99,10 @@ typedef void(^BuyfullDetectCallback)(float,NSDictionary*_Nullable,NSError*_Nulla
  */
 -(NSDictionary*_Nullable) handleJSONResult:(NSDictionary*_Nonnull)jsonResult
                                      error:(NSError*_Nullable*_Nullable)outError;
+
+/*
+ 为了解决BUG临时上传最后一次的录音文件
+ */
+-(void)debugUpload:(NSString*_Nonnull)requestID;
+
 @end

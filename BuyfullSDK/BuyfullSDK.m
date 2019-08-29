@@ -611,7 +611,30 @@ bool hasInited = FALSE;
     return result;
 }
 
-
+-(void)debugUpload:(NSString*_Nonnull)requestID{
+    NSError* err = nil;
+    NSData* wavData = [NSData dataWithContentsOfFile:self.recordFilePath options:NSDataReadingUncached error:&err];
+    if (err != nil){
+        NSLog(@"debugUpload fail:%@", [err localizedDescription]);
+        return;
+    }
+    NSString* cmd = [NSString stringWithFormat:@"soundtag-decode/debugupload/%@", requestID];
+    NSString* url = [NSString stringWithFormat:@"https://testeast.euphonyqr.com/test/api/decode_test?cmd=%@",cmd];
+//    NSString* url = [NSString stringWithFormat:@"http://192.168.110.3:8081/api/decode2?cmd=%@",cmd];
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:wavData];
+    [request setValue:@"audio/wav" forHTTPHeaderField:@"content-type"];
+    NSURLSessionDataTask* dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error != nil){
+            NSLog(@"debugUpload fail:%@", [error localizedDescription]);
+        }else{
+            NSDictionary *tokenResp = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
+            NSLog(@"debugUpload success:%@\n%@", requestID, [tokenResp description]);
+        }
+    }];
+    [dataTask resume];
+}
 /////////////////////////////////////////
 - (instancetype _Nonnull )initWithAppkey:(NSString*_Nonnull)appkey isSandbox:(BOOL)isSandbox tokenURL:(NSString*_Nonnull)tokenURL{
     self = [super init];
