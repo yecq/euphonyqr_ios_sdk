@@ -541,7 +541,7 @@ bool hasInited = FALSE;
     NSString* cmd = [NSString stringWithFormat:@"soundtag-decode/decodev6/iOS/BIN/%@", [self URLEncodedString:json]];
 //    NSString* url = [NSString stringWithFormat:@"https://api.euphonyqr.com/api/decode2?cmd=%@",cmd];
 //    NSString* url = [NSString stringWithFormat:@"http://192.168.110.3:8081/api/decode2?cmd=%@",cmd];
-    NSString* url = [NSString stringWithFormat:@"https://api.euphonyqr.com/test/api/decode_test?cmd=%@",cmd];
+    NSString* url = [NSString stringWithFormat:@"https://testeast.euphonyqr.com/test/api/decode_test?cmd=%@",cmd];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:bin];
