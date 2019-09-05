@@ -26,6 +26,7 @@
 const int   RECORD_SAMPLE_RATE = 44100; //默认录音采样率
 const float RECORD_PERIOD = 1.2; //录音时长
 const float LIMIT_DB = -120; //分贝阈值，低于此值不上传判断
+const float THRESHOLD_DB = -150;
 
 float fsin[N_WAVE];
 bool hasInited = FALSE;
@@ -404,6 +405,7 @@ bool hasInited = FALSE;
         return LIMIT_DB;
     }
     
+    bool allZero = true;
     float *re = self->real;
     float *im = self->imag;
     memset(re,0,sizeof(self->real));
@@ -414,7 +416,13 @@ bool hasInited = FALSE;
         }else{
             re[index] = (*((float*)pcmBytes));
         }
+        if (re[index] != 0){
+            allZero = false;
+        }
     }
+    if (allZero)
+        return THRESHOLD_DB;
+    
     window_hanning(re, stepCount);
     fft(re,im,10,0);
     int s = 418, l = 45;
@@ -430,6 +438,9 @@ bool hasInited = FALSE;
     db /= l;
     db = log(db) * (8.6858896380650365530225783783322);
     
+    if (isnan(db) || isinf(db)){
+        return THRESHOLD_DB;
+    }
     return db;
 }
 
