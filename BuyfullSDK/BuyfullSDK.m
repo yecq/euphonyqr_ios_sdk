@@ -606,7 +606,7 @@ bool hasInited = FALSE;
     [result setObject:rawResults forKey:@"rawResult"];
     [result setObject:sortedResults forKey:@"sortByPowerResult"];
     [result setObject:validResults forKey:@"result"];
-    [result setObject:[NSNumber numberWithInt:[allTags count]] forKey:@"count"];
+    [result setObject:[NSNumber numberWithLong:[allTags count]] forKey:@"count"];
     [result setObject:allTags forKey:@"allTags"];
     return result;
 }
@@ -736,12 +736,7 @@ bool hasInited = FALSE;
 //////////////////////////////////////////////////////////////
 
 - (NSString *)URLEncodedString:(NSString *)str {
-    NSString *encodedString = (NSString *)
-    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                              (CFStringRef)str,
-                                                              NULL,
-                                                              (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                              kCFStringEncodingUTF8));
+    NSString *encodedString = [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     return encodedString;
 }
 
@@ -825,16 +820,6 @@ int fft(float* fr, float* fi, int m, int inv){
     while(l < n) {
         if(inv) {
             shift = 0;
-            for(i=0; i<n; ++i) {
-                j = fr[i];
-                if(j < 0)
-                    j = -j;
-                m = fi[i];
-                if(m < 0)
-                    m = -m;
-            }
-            if(shift)
-                ++scale;
         } else {
             shift = 1;
         }
