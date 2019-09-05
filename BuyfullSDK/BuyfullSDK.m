@@ -618,7 +618,7 @@ bool hasInited = FALSE;
         NSLog(@"debugUpload fail:%@", [err localizedDescription]);
         return;
     }
-    NSString* cmd = [NSString stringWithFormat:@"soundtag-decode/debugupload/%@", requestID];
+    NSString* cmd = [NSString stringWithFormat:@"soundtag-decode/debugupload/%@_iOS", requestID];
     NSString* url = [NSString stringWithFormat:@"https://testeast.euphonyqr.com/test/api/decode_test?cmd=%@",cmd];
 //    NSString* url = [NSString stringWithFormat:@"http://192.168.110.3:8081/api/decode2?cmd=%@",cmd];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];

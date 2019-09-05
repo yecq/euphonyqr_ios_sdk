@@ -34,6 +34,9 @@
         return;
     AppDelegate* app = (AppDelegate*)[UIApplication sharedApplication].delegate;
     [app.buyfullSDK debugUpload:self.lastRequestID];
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = self.lastRequestID;
+    self.result.text = @"RequestID 已经在剪切板中，可以在微信中粘贴给工作人员用做查询";
 }
 
 -(IBAction)onTest:(id)sender{
