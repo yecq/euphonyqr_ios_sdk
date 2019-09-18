@@ -506,8 +506,13 @@ bool hasInited = FALSE;
     }else{
         resultBuffer[0] = 2;
     }
-    compress(re, resultBuffer + 4, resultSize);
-    
+    int compressedSize = compress(re, resultBuffer + 4, resultSize);
+    if (compressedSize > 65535){
+        error = [NSError errorWithDomain:@"too long bin" code:1 userInfo:nil];
+        return nil;
+    }
+    resultBuffer[1] |= 1;
+    *((unsigned short*)(resultBuffer + 2)) = (unsigned short)compressedSize;
     return result;
 }
 
