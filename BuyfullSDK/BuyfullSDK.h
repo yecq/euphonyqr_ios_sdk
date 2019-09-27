@@ -8,6 +8,9 @@
 #ifndef BuyfullSDK_h
 #define BuyfullSDK_h
 
+extern  const int   RECORD_SAMPLE_RATE; //默认录音采样率
+extern  const float RECORD_PERIOD; //录音时长
+extern  const float LIMIT_DB; //分贝阈值，低于此值不上传判断
 
 #endif /* BuyfullSDK_h */
 

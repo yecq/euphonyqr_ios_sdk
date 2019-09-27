@@ -21,9 +21,9 @@
 #define N_WAVE          (64*1024)	/* dimension of fsin[] */
 #define LOG2_N_WAVE     (6+10)		/* log2(N_WAVE) */
 #define abs(x) ((x)>0?(x):-(x))
-#define SDK_VERSION     @"1.0.1"
+#define SDK_VERSION     @"1.0.2"
 
-const int   RECORD_SAMPLE_RATE = 44100; //默认录音采样率
+const int   RECORD_SAMPLE_RATE = 48000; //默认录音采样率
 const float RECORD_PERIOD = 1.2; //录音时长
 const float LIMIT_DB = -120; //分贝阈值，低于此值不上传判断
 const float THRESHOLD_DB = -150;
