@@ -24,7 +24,7 @@
 #define SDK_VERSION     @"1.0.2"
 
 const int   RECORD_SAMPLE_RATE = 48000; //默认录音采样率
-const float RECORD_PERIOD = 1.2; //录音时长
+const float RECORD_PERIOD = 1.1; //录音时长
 const float LIMIT_DB = -120; //分贝阈值，低于此值不上传判断
 const float THRESHOLD_DB = -150;
 
