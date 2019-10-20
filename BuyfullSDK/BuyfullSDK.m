@@ -557,7 +557,7 @@ double toDB(double amp){
     NSData *data = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:outError];
     NSString *json = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
 //    NSLog(@"%@", json);
-    NSString* cmd = [NSString stringWithFormat:@"soundtag-decode/decodev6/iOS/BIN/%@", [self URLEncodedString:json]];
+    NSString* cmd = [NSString stringWithFormat:@"soundtag-decode/decodev7/iOS/BIN/%@", [self URLEncodedString:json]];
     NSString* url = [NSString stringWithFormat:@"https://api.euphonyqr.com/api/decode2?cmd=%@",cmd];
 //    NSString* url = [NSString stringWithFormat:@"http://192.168.0.141:8081/api/decode2?cmd=%@",cmd];
 //    NSString* url = [NSString stringWithFormat:@"https://testeast.euphonyqr.com/test/api/decode_test?cmd=%@",cmd];
@@ -583,7 +583,9 @@ double toDB(double amp){
     NSMutableArray* validResults = [[NSMutableArray alloc] init];
     for (int index = 0;index < [oldResult count]; ++index){
         NSMutableDictionary* raw_result = [[oldResult objectAtIndex:index] mutableCopy];
-        [raw_result setObject:[NSNumber numberWithInt:index] forKey:@"channel"];
+        if ([raw_result objectForKey:@"channel"] == nil){
+            [raw_result setObject:[NSNumber numberWithInt:index] forKey:@"channel"];
+        }
         [rawResults addObject:raw_result];
         int insertIndex = 0;
         BOOL insert = FALSE;
