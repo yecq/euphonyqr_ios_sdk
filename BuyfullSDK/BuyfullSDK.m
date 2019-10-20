@@ -20,12 +20,11 @@
 #define Pi 3.14159265358979f
 #define N_WAVE          (64*1024)	/* dimension of fsin[] */
 #define LOG2_N_WAVE     (6+10)		/* log2(N_WAVE) */
-#define abs(x) ((x)>0?(x):-(x))
-#define SDK_VERSION     @"1.0.2"
+#define SDK_VERSION     @"1.0.3"
 
 const int   RECORD_SAMPLE_RATE = 48000; //默认录音采样率
 const float RECORD_PERIOD = 1.1; //录音时长
-const float LIMIT_DB = -120; //分贝阈值，低于此值不上传判断
+const float LIMIT_DB = -130; //分贝阈值，低于此值不上传判断
 const float THRESHOLD_DB = -150;
 
 float fsin[N_WAVE];
@@ -370,6 +369,13 @@ bool hasInited = FALSE;
     }];
 }
 
+double toDB(double amp){
+    if (amp <= 0 || isnan(amp) || isinf(amp))
+        return THRESHOLD_DB;
+    
+    return log(amp) * (8.6858896380650365530225783783322);
+}
+
 -(float) getDB:(NSData*)pcmData
     sampleRate:(int)sampleRate
       channels:(int)channels
@@ -379,7 +385,7 @@ bool hasInited = FALSE;
     __autoreleasing NSError *error = nil;
     unsigned char* pcmBytes = (unsigned char*)[pcmData bytes];
     unsigned long long pcmDataSize = [pcmData length];
-    int stepCount = 1024;
+    int stepCount = 2048;
     int stepSize = channels * (bits / 8);
     
     if (!(sampleRate == 44100 || sampleRate == 48000)){
@@ -424,10 +430,10 @@ bool hasInited = FALSE;
         return THRESHOLD_DB;
     
     window_hanning(re, stepCount);
-    fft(re,im,10,0);
-    int s = 418, l = 45;
+    fft(re,im,11,0);
+    int s = 836, l = 90;
     if (sampleRate == 48000){
-        s = 384, l = 42;
+        s = 768, l = 84;
     }
     double db = 0;
     for (int index = 0;index < l;++index){
@@ -436,11 +442,8 @@ bool hasInited = FALSE;
         db += sqrt(_re * _re + _im * _im);
     }
     db /= l;
-    db = log(db) * (8.6858896380650365530225783783322);
+    db = toDB(db);
     
-    if (isnan(db) || isinf(db)){
-        return THRESHOLD_DB;
-    }
     return db;
 }
 
@@ -556,7 +559,7 @@ bool hasInited = FALSE;
 //    NSLog(@"%@", json);
     NSString* cmd = [NSString stringWithFormat:@"soundtag-decode/decodev6/iOS/BIN/%@", [self URLEncodedString:json]];
     NSString* url = [NSString stringWithFormat:@"https://api.euphonyqr.com/api/decode2?cmd=%@",cmd];
-//    NSString* url = [NSString stringWithFormat:@"http://192.168.110.3:8081/api/decode2?cmd=%@",cmd];
+//    NSString* url = [NSString stringWithFormat:@"http://192.168.0.141:8081/api/decode2?cmd=%@",cmd];
 //    NSString* url = [NSString stringWithFormat:@"https://testeast.euphonyqr.com/test/api/decode_test?cmd=%@",cmd];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:@"POST"];
@@ -622,7 +625,7 @@ bool hasInited = FALSE;
     [result setObject:rawResults forKey:@"rawResult"];
     [result setObject:sortedResults forKey:@"sortByPowerResult"];
     [result setObject:validResults forKey:@"result"];
-    [result setObject:[NSNumber numberWithLong:[allTags count]] forKey:@"count"];
+    [result setObject:[NSNumber numberWithLong:[validResults count]] forKey:@"count"];
     [result setObject:allTags forKey:@"allTags"];
     return result;
 }
