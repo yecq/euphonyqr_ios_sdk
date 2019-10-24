@@ -12,7 +12,7 @@
   (b) isSandbox | bool | appkey是官网的填false，是测试服的填true</br>
   (c) tokenURL | string | 请自行布署一个后端服务器用来获取token，访问动听api需要token， 具体请见 https://github.com/haoboyang/qs_wx_token</br>
   2）设置userID或phoneNumber，做为数据分析标识通过动听后台API返回，可选。</br>
-  3）参考ViewController.m中的doTest方法，调用检测detect，可选的参数有customData(可以通过动听后台API加上requestID查询返回)，等待返回结果。如果想要反复检测，可以在检测回调后立即给主线程发消息，再次开始检测。</br>
+  3）参考ViewController.m中的doTest方法，调用detect，等待返回结果。如果想要反复检测，可以在检测回调后立即给主线程发消息，再次调用detect。可选的参数有customData(可以通过动听后台API加上requestID查询返回)</br>
   4 ) 返回结果为^(float dB, NSDictionary * jsonResp, NSError * err)</br>
     (a) dB表示录音的分贝数，一般-90以上信号质量较好，-120及以下基本为无信号</br>
     (b) err为出错说明信息，没有错误时为nil</br>
@@ -20,7 +20,7 @@
     {</br>
         "reqid":"xxxxx", |动听返回的requestID，可用于查询</br>
         "count":2, | 有效结果的总数(result数组大小）</br>
-        "allTags":["tag1","tag2","tag3"], | 所有合法结果中的tags的集合</br></br>
+        "allTags":["tag1","tag2","tag3"], | 所有有效结果中的tags的集合</br></br>
         "result":[ | 所有有效的结果，并且按power(音量分贝)排序</br>
             {</br>
                 "channel":3, | 信道号：从0开始</br>
