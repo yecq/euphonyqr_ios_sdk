@@ -15,19 +15,19 @@
   2）(可选)设置userID或phoneNumber，做为数据分析标识通过动听后台API返回。</br></br>
   3）检测：参考ViewController.m中的doTest方法，调用detect，等待返回结果。如果想要反复检测，可以在检测回调后立即在主线程再次调用detect。可选的参数有customData(string类型，可以通过动听后台API加上requestID查询返回)</br></br>
   4 ) 处理返回结果：ViewController.m第59行 </br> 
-    [app.buyfullSDK detect:@"you can add custom data" callback:^(float dB, NSDictionary * jsonResp, NSError * err)</br>
+    一共3个返回参数: (float dB, NSDictionary * jsonResp, NSError * err)</br>
     (a) dB表示录音的分贝数，一般-90以上信号质量较好，-120及以下基本为无信号</br>
     (b) err为出错说明信息，没有错误时为nil</br>
-    (c) jsonResp为返回数据，没有结果或出错是为nil，格式为：</br>
+    (c) jsonResp为返回数据，直接从JSON解析成NSDictionary，没有结果或出错是为nil，格式为：</br>
     {</br>
-        "reqid":"xxxxx", |动听返回的requestID，可用于查询</br>
-        "count":2, | 有效结果的总数(result数组大小）</br>
-        "allTags":["tag3","tag1","tag2"], | 所有有效结果中的tags的去重集合</br></br>
-        "result":[ | 所有有效的结果，并且按power(音量分贝)排序</br>
+        "reqid":"xxxxx", // 动听返回的requestID，可用于查询</br>
+        "count":2, // 有效结果的总数(result数组大小）</br>
+        "allTags":["tag3","tag1","tag2"], // 所有有效结果中的tags的去重集合</br></br>
+        "result":[ // 所有有效的结果，并且按power(音量分贝)排序</br>
             {</br>
-                "channel":3, | 信道号：从0开始</br>
-                "power":-89, | 此信道的分贝数</br>
-                "tags":["tag3","tag1"] | 检测返回的结果，可以有多个字符串</br>
+                "channel":3, // 信道号：从0开始</br>
+                "power":-89, // 此信道的分贝数</br>
+                "tags":["tag3","tag1"] // 检测返回的结果，可以有多个字符串</br>
             },</br>
             {</br>
                 "channel":1,</br>
@@ -35,7 +35,7 @@
                 "tags":["tag2","tag1"]</br>
             },</br>
         ],</br></br>
-        "sortByPowerResult":[ |包含有效和无效的结果，按power(音量分贝)排序</br>
+        "sortByPowerResult":[ // 包含有效和无效的结果，按power(音量分贝)排序</br>
             {</br>
                 "channel":3,</br>
                 "power":-89,</br>
@@ -57,7 +57,7 @@
                 "tags":[]</br>
             },</br>
         ],</br></br>
-        "rawResult":[|包含有效和无效的结果，按channel递增</br>
+        "rawResult":[// 包含有效和无效的结果，按channel递增</br>
             {</br>
                 "channel":0,</br>
                 "power":-108,</br>
