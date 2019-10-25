@@ -27,18 +27,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(IBAction)onDebugUpload:(id)sender{
-    //APP要自已申请麦克风权限，申请成功后才能正常调用SDK
-    //SDK中自带麦请麦克风权限代码，可以自行修改
-    if (self.lastRequestID == nil)
-        return;
-    AppDelegate* app = (AppDelegate*)[UIApplication sharedApplication].delegate;
-    [app.buyfullSDK debugUpload:self.lastRequestID];
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = self.lastRequestID;
-    self.result.text = @"RequestID 已经在剪切板中，可以在微信中粘贴给工作人员用做查询";
-}
-
 -(IBAction)onTest:(id)sender{
     //APP要自已申请麦克风权限，申请成功后才能正常调用SDK
     //SDK中自带麦请麦克风权限代码，可以自行修改
@@ -83,5 +71,16 @@
     }
 }
 
+
+-(IBAction)onDebugUpload:(id)sender{
+    //上传原始录音文件给动听工作人员作故障诊断，在粘贴板中有requestID，请将它粘贴给动听工作人员
+    if (self.lastRequestID == nil)
+        return;
+    AppDelegate* app = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.buyfullSDK debugUpload:self.lastRequestID];
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = self.lastRequestID;
+    self.result.text = @"RequestID 已经在剪切板中，可以在微信中粘贴给工作人员用做查询";
+}
 
 @end

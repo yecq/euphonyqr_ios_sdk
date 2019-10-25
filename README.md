@@ -14,7 +14,7 @@
   (c) tokenURL | string | 请自行布署一个后端服务器用来获取token，访问动听api需要token， 具体请见 https://github.com/haoboyang/qs_wx_token</br></br>
   2）(可选)设置userID或phoneNumber，做为数据分析标识通过动听后台API返回。</br></br>
   3）检测：参考ViewController.m中的doTest方法，调用detect，等待返回结果。如果想要反复检测，可以在检测回调后立即在主线程再次调用detect。可选的参数有customData(string类型，可以通过动听后台API加上requestID查询返回)</br></br>
-  4 ) 处理返回结果：ViewController.m第59行 </br> 
+  4 ) 处理返回结果：ViewController.m第47行 </br> 
     一共3个返回参数: (float dB, NSDictionary * jsonResp, NSError * err)</br>
     (a) dB表示录音的分贝数，一般 -90以上信号质量较好，-120及以下基本为无信号</br>
     (b) err为出错说明信息，没有错误时为nil</br>
