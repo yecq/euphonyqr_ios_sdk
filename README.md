@@ -6,7 +6,8 @@
 1. 准备</br>
   请和动听工作人员联系获取售前服务文档，并全部完成。如果只是想尝试一下SDK，可以跳过这一步。
 2. 集成SDK</br>
-  参照sdkdemo，大体业务流程是：</br>
+  请打开BuyfullSDK.xcodeproj，编译运行，SDK代码是BuyfullSDK.m，示例代码在ViewController.m：</br>
+  参照示例代码，大体业务流程是：</br>
   1）参考Appdelegate.m,在didFinishLaunchingWithOptions中初始化sdk，传入的参数有</br>
   (a) appkey | string | 注册了动听帐号后可以在个人中心->应用管理中查看appkey</br>
   (b) isSandbox | bool | appkey是官网的填false，是测试服的填true</br>
