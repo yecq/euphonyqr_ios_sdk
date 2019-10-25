@@ -20,29 +20,29 @@
     {</br>
         "reqid":"xxxxx", |动听返回的requestID，可用于查询</br>
         "count":2, | 有效结果的总数(result数组大小）</br>
-        "allTags":["tag1","tag2","tag3"], | 所有有效结果中的tags的集合</br></br>
+        "allTags":["tag3","tag1","tag2"], | 所有有效结果中的tags的去重集合</br></br>
         "result":[ | 所有有效的结果，并且按power(音量分贝)排序</br>
             {</br>
                 "channel":3, | 信道号：从0开始</br>
                 "power":-89, | 此信道的分贝数</br>
-                "tags":["tag1","tag2"] | 检测返回的结果，可以有多个字符串</br>
+                "tags":["tag3","tag1"] | 检测返回的结果，可以有多个字符串</br>
             },</br>
             {</br>
                 "channel":1,</br>
                 "power":-102,</br>
-                "tags":["tag3"]</br>
+                "tags":["tag2","tag1"]</br>
             },</br>
         ],</br></br>
         "sortByPowerResult":[ |包含有效和无效的结果，按power(音量分贝)排序</br>
             {</br>
                 "channel":3,</br>
                 "power":-89,</br>
-                "tags":["tag1","tag2"]</br>
+                "tags":["tag3","tag1"]</br>
             },</br>
             {</br>
                 "channel":1,</br>
                 "power":-102,</br>
-                "tags":["tag3"]</br>
+                "tags":["tag2","tag1"]</br>
             },</br>
             {</br>
                 "channel":0,</br>
@@ -64,7 +64,7 @@
             {</br>
                 "channel":1,</br>
                 "power":-102,</br>
-                "tags":["tag3"]</br>
+                "tags":["tag2","tag1"]</br>
             },</br>
             {</br>
                 "channel":2,</br>
@@ -74,7 +74,7 @@
             {</br>
                 "channel":3,</br>
                 "power":-89,</br>
-                "tags":["tag1","tag2"]</br>
+                "tags":["tag3","tag1"]</br>
             },</br>
         ],</br></br>
     }
@@ -84,6 +84,7 @@
 4. 注意事项和常见问题：</br>
   1）初始化请尽可能的提前，建议把BuyfullSDK做为整个APP生命周期中都存在的组件</br>
   2）请分清楚APPKEY和SECKEY是在动听官网 http://www.euphonyqr.com申请的还是在动听测试服 http://sandbox.euphonyqr.com申请的。线下店帐号和APP帐号都要在同一平台上申请才能互相操作。</br>
+  3）detect回调不在主线程，如果要更新UI请在主线程操作。</br>
   4）请确保网络通畅并且可以连接外网。</br>
   5）开发人员需要自行申请麦克风权限，同时建议在APPSTORE提交审合时动态暂时关闭检测功能以免解释麻烦。</br>
   6 ) 请查看一下AppDelegate和ViewController中的注释。</br>
