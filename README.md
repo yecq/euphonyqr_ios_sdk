@@ -16,7 +16,7 @@
   3）检测：参考ViewController.m中的doTest方法，调用detect，等待返回结果。如果想要反复检测，可以在检测回调后立即在主线程再次调用detect。可选的参数有customData(string类型，可以通过动听后台API加上requestID查询返回)</br></br>
   4 ) 处理返回结果：ViewController.m第59行 </br> 
     一共3个返回参数: (float dB, NSDictionary * jsonResp, NSError * err)</br>
-    (a) dB表示录音的分贝数，一般-90以上信号质量较好，-120及以下基本为无信号</br>
+    (a) dB表示录音的分贝数，一般 -90以上信号质量较好，-120及以下基本为无信号</br>
     (b) err为出错说明信息，没有错误时为nil</br>
     (c) jsonResp为返回数据，直接从JSON解析成NSDictionary，没有结果或出错是为nil，格式为：</br>
     {</br>
@@ -85,13 +85,13 @@
   从动听工作人员处取得测试音频或测试设备，测试音频请用mac电脑（IBM，联想，三星电脑不行）或专业音响，蓝牙音响播放，测试设备使用方法请咨询动听工作人员。</br></br>
 4. 注意事项和常见问题：</br>
   1）初始化请尽可能的提前，建议把BuyfullSDK做为整个APP生命周期中都存在的组件</br>
-  2）请分清楚APPKEY和SECKEY是在动听官网 http://www.euphonyqr.com申请的还是在动听测试服 http://sandbox.euphonyqr.com申请的。线下店帐号和APP帐号都要在同一平台上申请才能互相操作。</br>
+  2）请分清楚APPKEY和SECKEY是在动听官网 http://www.euphonyqr.com 申请的还是在动听测试服 http://sandbox.euphonyqr.com 申请的。线下店帐号和APP帐号都要在同一平台上申请才能互相操作。</br>
   3）detect回调不在主线程，如果要更新UI请在主线程操作。</br>
   4）请确保网络通畅并且可以连接外网。</br>
   5）开发人员需要自行申请麦克风权限，同时建议在APPSTORE提交审合时动态暂时关闭检测功能以免解释麻烦。</br>
   6 ) 请查看一下AppDelegate和ViewController中的注释。</br>
   7 ) 请至少在APP帐号下购买一个渠道后再进行测试，并且请在渠道中自行设定，自行设定，自行设定（重要的事情说三遍）识别结果，可以为任何字符串包括JSON。</br>
-  
+  8 ) 主体逻辑部分都在detect方法中，可以自行看代码并修改业务流程。</br>
   
 5. API说明</br>
   请查看一下buyfullSDK.h中的方法注释
