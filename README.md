@@ -11,9 +11,9 @@
   1）初始化：参考Appdelegate.m,在didFinishLaunchingWithOptions中初始化sdk，传入的参数有</br>
   (a) appkey | string | 注册了动听帐号后可以在个人中心->应用管理中查看appkey</br>
   (b) isSandbox | bool | appkey是官网的填false，是测试服的填true</br>
-  (c) tokenURL | string | 请自行布署一个后端服务器用来获取token，访问动听api需要token， 具体请见 https://github.com/haoboyang/qs_wx_token</br>
-  2）(可选)设置userID或phoneNumber，做为数据分析标识通过动听后台API返回。</br>
-  3）检测：参考ViewController.m中的doTest方法，调用detect，等待返回结果。如果想要反复检测，可以在检测回调后立即给主线程发消息，再次调用detect。可选的参数有customData(可以通过动听后台API加上requestID查询返回)</br>
+  (c) tokenURL | string | 请自行布署一个后端服务器用来获取token，访问动听api需要token， 具体请见 https://github.com/haoboyang/qs_wx_token</br></br>
+  2）(可选)设置userID或phoneNumber，做为数据分析标识通过动听后台API返回。</br></br>
+  3）检测：参考ViewController.m中的doTest方法，调用detect，等待返回结果。如果想要反复检测，可以在检测回调后立即在主线程再次调用detect。可选的参数有customData(可以通过动听后台API加上requestID查询返回)</br></br>
   4 ) 处理返回结果：ViewController.m第59行  ^(float dB, NSDictionary * jsonResp, NSError * err)</br>
     (a) dB表示录音的分贝数，一般-90以上信号质量较好，-120及以下基本为无信号</br>
     (b) err为出错说明信息，没有错误时为nil</br>
@@ -78,10 +78,10 @@
                 "tags":["tag3","tag1"]</br>
             },</br>
         ],</br></br>
-    }
+    }</br></br>
 
 3. 测试</br>
-  从动听工作人员处取得测试音频或测试设备，测试音频请用mac电脑（IBM，联想，三星电脑不行）或专业音响，蓝牙音响播放，测试设备使用方法请咨询动听工作人员。
+  从动听工作人员处取得测试音频或测试设备，测试音频请用mac电脑（IBM，联想，三星电脑不行）或专业音响，蓝牙音响播放，测试设备使用方法请咨询动听工作人员。</br></br>
 4. 注意事项和常见问题：</br>
   1）初始化请尽可能的提前，建议把BuyfullSDK做为整个APP生命周期中都存在的组件</br>
   2）请分清楚APPKEY和SECKEY是在动听官网 http://www.euphonyqr.com申请的还是在动听测试服 http://sandbox.euphonyqr.com申请的。线下店帐号和APP帐号都要在同一平台上申请才能互相操作。</br>
