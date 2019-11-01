@@ -887,7 +887,7 @@ void window_hanning(float* fr, unsigned int n) {
 }
 
 int compress(float *input, char *output, unsigned int numberOfSamples){
-    float max = -9999999999, min = 9999999999;
+    float max = -9999999999, min = 9999999999, sum = 0;
     
     for (int index = 0;index < numberOfSamples;++index){
         float temp = input[index];
@@ -895,21 +895,22 @@ int compress(float *input, char *output, unsigned int numberOfSamples){
             max = temp;
         if (temp < min)
             min = temp;
+        sum += temp;
     }
-    float range = (max - min);
-    float average = (max + min) / 2;
-    float factor = range / 256;
+    float average = 0;
+    float longer = fabs(max)>fabs(min)?fabs(max):fabs(min);
+    float factor = longer / 127;
     
     float* floatOutput = (float*)output;
     floatOutput[0] = average * 2;
     floatOutput[1] = factor * 2;
     for (int index = 0;index < numberOfSamples;++index){
         float temp = input[index] - average;
-        int result = (temp / factor);
+        int result = roundf(temp / factor);
         if (result > 127)
             result = 127;
-        else if (result < -128)
-            result = -128;
+        else if (result < -127)
+            result = -127;
         output[8+index] = result;
     }
     return 8+numberOfSamples;
